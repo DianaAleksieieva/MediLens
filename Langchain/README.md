@@ -45,8 +45,7 @@ pip install -r requirements.txt
 Add your environment variables (e.g., API keys):
 
 ```env
-FDA_API_KEY=your_fda_api_key_here
-OPENAI_API_KEY=your_openai_key_here
+GOOGLE_API_KEY=your_openai_key_here
 ```
 
 ### 5. Run the project

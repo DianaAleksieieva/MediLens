@@ -45,7 +45,9 @@ pip install -r requirements.txt
 Add your environment variables (e.g., API keys):
 
 ```env
+
 GOOGLE_API_KEY=your_openai_key_here
+
 ```
 
 ### 5. Run the project

@@ -16,17 +16,37 @@ class GraphState(TypedDict):
 
 def call_llm(state: GraphState) -> GraphState:
     messages = state["messages"]
-    
-    # Ensure messages are in the format expected by the LLM
-    if isinstance(messages[-1], dict) and "role" in messages[-1] and "content" in messages[-1]:
-        response = llm.invoke(messages)
-    else:
-        raise ValueError("Messages must be a list of {role, content} dicts")
+    pill_data = state.get("pill_data", "")
+
+    system_prompt = {
+    "role": "system",
+    "content": (
+        "You are a helpful medicine information assistant.\n\n"
+        "Here is the official FDA data about the medicine:\n"
+        f"{pill_data}\n\n"
+        "If the user asks about side effects or other details missing from the official data, "
+        "provide a clear and friendly explanation of common side effects or relevant information based on general medical knowledge. "
+        "Use bullet points or lists where appropriate.\n"
+        "Always include this disclaimer:\n"
+        "⚠️ This information is based on general knowledge and may not reflect official FDA data. "
+        "Please consult a healthcare provider for personalized advice.\n"
+        "Keep answers easy to understand and informative."
+    )
+}
+
+
+    full_messages = [system_prompt] + messages
+
+    response = llm.invoke(full_messages)
 
     return {
         "messages": messages + [response],
-        "pill_name": None
+        "pill_name": state.get("pill_name"),
+        "pill_data": pill_data
     }
+
+
+
 
 def router(state: GraphState) -> str:
     user_msg = state["messages"][-1]["content"].lower()
@@ -44,8 +64,10 @@ def call_pill_tool(state: GraphState) -> GraphState:
     tool_result = get_pill_info(pill_name)
     return {
         "messages": state["messages"] + [{"role": "assistant", "content": tool_result}],
-        "pill_name": pill_name
+        "pill_name": pill_name,
+        "pill_data": tool_result  # ✅ Save extracted data to use later
     }
+
 
 # Build the graph
 builder = StateGraph(GraphState)
@@ -64,25 +86,39 @@ builder.add_edge("pill_tool", END)
 
 graph = builder.compile()
 
-# # Example usage
-# input_state = {
-#     "messages": [{"role": "user", "content": "Tell me about the pill Eczema Real Relief"}],
-#     "pill_name": None
-# }
+# Example usage
+input_state = {
+    "messages": [{"role": "user", "content": "Tell me about the pill Sertraline"}],
+    "pill_name": None
+}
 
-# result = graph.invoke(input_state)
+result = graph.invoke(input_state)
 
-# print("🤖", result["messages"][-1]["content"])
-# # Initial question
-# messages = [{"role": "user", "content": "Tell me about the pill Eczema Real Relief"}]
-# state = {"messages": messages, "pill_name": None}
-# result = graph.invoke(state)
-# print("🤖", result["messages"][-1]["content"])
+print("🤖", result["messages"][-1]["content"])
+# Initial question
+messages = [{"role": "user", "content": "Tell me about the pill Lisinopril"}]
+state = {"messages": messages, "pill_name": None}
+result = graph.invoke(state)
+print("🤖", result["messages"][-1]["content"])
 
 # # Follow-up question, reuse pill_name from last state
-# messages = result["messages"] + [{"role": "user", "content": "Can a child of 8 years take this pill?"}]
-# state = {"messages": messages, "pill_name": result["pill_name"]}  # <--- keep pill_name here
-# result2 = graph.invoke(state)
-# last_message = result2["messages"][-1]
-# print("🤖", last_message.content if hasattr(last_message, "content") else last_message["content"])
+messages = result["messages"] + [{"role": "user", "content": "What are the side effects?"}]
+state = {
+    "messages": messages,
+    "pill_name": result["pill_name"],
+   "pill_data": result["messages"][-1]["content"]
+}
+result2 = graph.invoke(state)
+print("🤖", result2["messages"][-1].content)
+
+
+# # Follow-up question, reuse pill_name from last state
+messages = result["messages"] + [{"role": "user", "content": "Can it cause dizziness?"}]
+state = {
+    "messages": messages,
+    "pill_name": result["pill_name"],
+    "pill_data": result["messages"][-1]["content"]
+}
+result2 = graph.invoke(state)
+print("🤖", result2["messages"][-1].content)
 

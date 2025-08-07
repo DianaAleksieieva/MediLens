@@ -55,7 +55,7 @@ export default function InputOptions() {
     container: {
       minHeight: "100vh",
       padding: "2rem",
-      background: dark ? "#1e293b" : "#fff",
+      background: dark ? "#1e293b" : "#ffc8d0ff",
       color: dark ? "#f1f5f9" : "#1e293b",
       fontFamily: "sans-serif",
       transition: "all 0.3s ease",
@@ -89,7 +89,7 @@ export default function InputOptions() {
       gap: "0.5rem",
     },
     submitBtn: {
-      background: "#dc2626",
+      background: "#FF6B6B",
       color: "white",
     },
     resetBtn: {
@@ -132,7 +132,7 @@ export default function InputOptions() {
     <div style={styles.container}>
       <div style={styles.card}>
         <div style={styles.toggle} onClick={() => setDark(!dark)}>
-          {dark ? "☀️ Light Mode" : "🌙 Dark Mode"}
+          {dark ? "☀️ Light" : "🌙 Dark"}
         </div>
         <h1 style={styles.title}>MediLens</h1>
 

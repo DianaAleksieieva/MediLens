@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import InputOptions from "./pages/InputOptions";
 import Result from "./pages/Result";
 import NotFound from "./pages/NotFound";
+import BotPage from "./pages/Bot-page";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/input" element={<InputOptions />} />
         <Route path="/result" element={<Result />} />
+        <Route path="/result" element={<BotPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

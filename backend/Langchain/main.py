@@ -87,38 +87,38 @@ builder.add_edge("pill_tool", END)
 graph = builder.compile()
 
 # Example usage
-input_state = {
-    "messages": [{"role": "user", "content": "Tell me about the pill Sertraline"}],
-    "pill_name": None
-}
+# input_state = {
+#     "messages": [{"role": "user", "content": "Tell me about the pill Sertraline"}],
+#     "pill_name": None
+# }
 
-result = graph.invoke(input_state)
+# result = graph.invoke(input_state)
 
-print("🤖", result["messages"][-1]["content"])
-# Initial question
-messages = [{"role": "user", "content": "Tell me about the pill Lisinopril"}]
-state = {"messages": messages, "pill_name": None}
-result = graph.invoke(state)
-print("🤖", result["messages"][-1]["content"])
+# print("🤖", result["messages"][-1]["content"])
+# # Initial question
+# messages = [{"role": "user", "content": "Tell me about the pill Lisinopril"}]
+# state = {"messages": messages, "pill_name": None}
+# result = graph.invoke(state)
+# print("🤖", result["messages"][-1]["content"])
 
-# # Follow-up question, reuse pill_name from last state
-messages = result["messages"] + [{"role": "user", "content": "What are the side effects?"}]
-state = {
-    "messages": messages,
-    "pill_name": result["pill_name"],
-   "pill_data": result["messages"][-1]["content"]
-}
-result2 = graph.invoke(state)
-print("🤖", result2["messages"][-1].content)
+# # # Follow-up question, reuse pill_name from last state
+# messages = result["messages"] + [{"role": "user", "content": "What are the side effects?"}]
+# state = {
+#     "messages": messages,
+#     "pill_name": result["pill_name"],
+#    "pill_data": result["messages"][-1]["content"]
+# }
+# result2 = graph.invoke(state)
+# print("🤖", result2["messages"][-1].content)
 
 
-# # Follow-up question, reuse pill_name from last state
-messages = result["messages"] + [{"role": "user", "content": "Can it cause dizziness?"}]
-state = {
-    "messages": messages,
-    "pill_name": result["pill_name"],
-    "pill_data": result["messages"][-1]["content"]
-}
-result2 = graph.invoke(state)
-print("🤖", result2["messages"][-1].content)
+# # # Follow-up question, reuse pill_name from last state
+# messages = result["messages"] + [{"role": "user", "content": "Can it cause dizziness?"}]
+# state = {
+#     "messages": messages,
+#     "pill_name": result["pill_name"],
+#     "pill_data": result["messages"][-1]["content"]
+# }
+# result2 = graph.invoke(state)
+# print("🤖", result2["messages"][-1].content)
 

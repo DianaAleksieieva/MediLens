@@ -61,3 +61,4 @@ MediLens/
 - 🌍 Multi-language support for OCR and AI responses.
 - 🔐 User authentication and saved prescription history.
 
+

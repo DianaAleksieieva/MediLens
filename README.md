@@ -48,7 +48,6 @@ https://docs.google.com/presentation/d/1X2lw622FaYvy8Tf3WkwZFYEo4yLmUnS3eP1DG-mR
 
 ---
 ## 📂 Project Structure
-MediLens/
 --backend/ # FastAPI backend with OCR, AI, and FDA API integrations
 --frontend/ # React app for uploading images and displaying results
 requirements.txt # Python dependencies
@@ -60,6 +59,7 @@ README.md
 - 🗣 Add voice assistant mode for visually impaired users.
 - 🌍 Multi-language support for OCR and AI responses.
 - 🔐 User authentication and saved prescription history.
+
 
 
 

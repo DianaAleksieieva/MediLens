@@ -4,6 +4,11 @@
 Users can scan medication packaging or prescriptions and ask follow-up questions about usage, side effects, and interactions.
 
 ---
+## DEMO
+https://www.youtube.com/watch?v=FdIM_Mcb0-c
+
+## Presentation
+https://docs.google.com/presentation/d/1X2lw622FaYvy8Tf3WkwZFYEo4yLmUnS3eP1DG-mRt24/edit?usp=sharing
 
 ## 🚀 Features
 - 📷 **OCR-based extraction** of pill names and prescription instructions.
@@ -43,12 +48,11 @@ Users can scan medication packaging or prescriptions and ask follow-up questions
 
 ---
 
-## 📂 Project Structure
 MediLens/
-│── backend/           # FastAPI backend with OCR, AI, and FDA API integrations
-│── frontend/          # React app for uploading images and displaying results
-│── requirements.txt   # Python dependencies
-│── package.json       # Frontend dependencies
+│── backend/ # FastAPI backend with OCR, AI, and FDA API integrations
+│── frontend/ # React app for uploading images and displaying results
+│── requirements.txt # Python dependencies
+│── package.json # Frontend dependencies
 └── README.md
 
 ## 🔮 Future Enhancements
@@ -56,3 +60,4 @@ MediLens/
 - 🗣 Add voice assistant mode for visually impaired users.
 - 🌍 Multi-language support for OCR and AI responses.
 - 🔐 User authentication and saved prescription history.
+
